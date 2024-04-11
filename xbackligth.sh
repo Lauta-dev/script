@@ -2,15 +2,13 @@
 # Se necesita instalar xorg-xbacklight
 # Sudo pacman -S xorg-xbacklight
 
-arg=$1
-
 inc="xbacklight -inc 2"
 dec="xbacklight -dec 2"
 
-case "$arg" in
-  "+") $inc
+case "$1" in
+  "-i") $inc
   ;;
-  "-") $dec
+  "-d") $dec
   ;;
   *) echo default
   ;;

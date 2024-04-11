@@ -3,15 +3,15 @@
 
 arg=$1
 
-personal_terminal='st'
+personal_terminal='st -t Terminal'
 terminal='st'
-browser_web='firefox'
+browser_web='thorium-browser'
 file_manager='pcmanfm'
-music="$terminal -e ncmpcpp"
-htop="$terminal -e htop"
+music="$terminal -t mpd -e ncmpcpp"
+htop="$terminal -t htop -e htop"
 code_editor='codium'
 note_edito='~/.app/obsidian.AppImage'
-terminal_file_manager="$terminal -e ranger"
+terminal_file_manager="$terminal -t ranger -e ranger"
 
 case "$arg" in
   'terminal') $personal_terminal
@@ -25,7 +25,7 @@ case "$arg" in
   'htop') $htop
   ;;
   'code_editor') $code_editor
-	;;
+  ;;
 	'node_editor') $node_editor
 	;;
   'tf') $terminal_file_manager
