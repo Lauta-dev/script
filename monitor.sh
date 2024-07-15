@@ -11,7 +11,7 @@ export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
 HDMI="$(cat /sys/class/drm/card0-HDMI-A-1/status)"
 
 connect() {
-  xrandr --output HDMI1 --auto --right-of eDP1
+  xrandr --output HDMI1 --mode 1360x768 --right-of eDP1
 }
 
 disconnect() {
