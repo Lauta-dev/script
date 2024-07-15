@@ -1,19 +1,15 @@
 #!/bin/bash
-# Scripts para lanzar aplicaciones
-
-arg=$1
-
-personal_terminal='st -t Terminal'
-terminal='st'
-browser_web='thorium-browser'
-file_manager='pcmanfm'
-music="$terminal -t mpd -e ncmpcpp"
+personal_terminal="alacritty"
+terminal="alacritty"
+browser_web='brave'
+file_manager="thunar $HOME"
+music="$terminal --title cmus --command cmus"
 htop="$terminal -t htop -e htop"
-code_editor='codium'
+code_editor='$terminal -t neovim  -e v'
 note_edito='~/.app/obsidian.AppImage'
 terminal_file_manager="$terminal -t ranger -e ranger"
 
-case "$arg" in
+case "$1" in
   'terminal') $personal_terminal
   ;;
   'browser') $browser_web
