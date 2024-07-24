@@ -23,7 +23,7 @@ trigger_notify() {
   dunstify -u low \
     -r 2 \
     -i $icon \
-    "Brightness: $brightness_status%"
+    "Brightness: $brightness_status"
 }
 
 if [[ "$brightness_status" > "0" && "$brightness_status" < "25" ]]; then
