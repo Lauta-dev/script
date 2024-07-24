@@ -1,0 +1,75 @@
+#!/bin/bash
+
+# deps
+# - bat
+# - sqlite
+# - wl-clipboard (wayland) or xclip (x11)
+# - fzf
+
+db_dir="$HOME/.clipboard.sqlite"
+copy_tool="wl-copy"
+preview="bat"
+
+function required_deps() {
+  if [ ! -f "$(which fzf)" ]; then
+    echo -e "\nInstall 'fzf'"
+    exit 1
+  fi
+
+  if [ ! -f "$(which sqlite3)" ]; then
+    echo -e "\nInstall 'sqlite3'"
+    exit 1
+  fi
+}
+
+required_deps
+
+if [ ! -f "$(which bat)" ]; then
+    echo "If you need syntax highlighting, install 'bat'"
+    preview="/bin/cat"
+fi
+
+if [[ "$XDG_SESSION_TYPE" == "wayland" ]]; then
+  if [ ! -f "$(which wl-copy)" ]; then
+    echo "Install wl-clipboard"
+    exit 1
+  fi
+
+elif [[ "$XDG_SESSION_TYPE" == "x11" ]]; then
+  if [ ! -f "$(which xclip)" ]; then
+    echo "Install xorg-xclip"
+    exit 1
+  else
+    copy_tool="xclip"
+  fi
+  
+elif [[ "$XDG_SESSION_TYPE" == "X11" ]]; then
+  if [ ! -f "$(which xclip)" ]; then
+    echo "Install xorg-xclip"
+    exit 1
+  else
+    copy_tool="xclip"
+  fi
+fi
+
+function run_fzf_with_preview () {
+  if [[ preview == "cat" ]]; then
+    sqlite3 "$db_dir" "select id from c" | \
+      fzf --multi --preview "sqlite3 $db_dir 'select contents from c where id = {1}' | $preview" | \
+      xargs -I {} sh -c "sqlite3 $db_dir 'select contents from c where id = {}' | $copy_tool"
+  else
+    sqlite3 "$db_dir" "select id from c" | \
+      fzf --multi --preview "sqlite3 $db_dir 'select contents from c where id = {1}' | bat -n --color=always" | \
+      xargs -I {} sh -c "sqlite3 $db_dir 'select contents from c where id = {}' | $copy_tool"
+  fi
+}
+
+case "$1" in
+  "-with_preview") run_fzf_with_preview
+    ;;
+  "-without_preview") ./open_db | fzf --read0 --reverse | $copy_tool
+    ;;
+  *) dunstify "No exist"
+    ;;
+esac
+

@@ -1,0 +1,17 @@
+#!/bin/python3
+
+import sqlite3
+import os
+
+envhome = os.getenv('HOME')
+dbfile = "/home/lauta/.clipboard.sqlite"
+
+con = sqlite3.connect(dbfile)
+cur = con.cursor()
+
+items = [row[0] for row in cur.execute("SELECT contents FROM c")]
+nul_separated = '\x00'.join(items)
+
+con.close()
+print(nul_separated)
+
