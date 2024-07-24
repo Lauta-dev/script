@@ -7,19 +7,15 @@ bateria_sin_porsentaje="$(acpi --battery | grep -oP '\d+%' | awk '{print substr(
 bateria_con_porsentaje="$(acpi --battery | grep -oP '\d+%' | awk '{print $1}')"
 
 notify() {
-  /bin/dunstify -u "$1" "$2" "$3"
+  dunstify -u "$1" "$2" "$3"
 }
 
 case "$bateria_sin_porsentaje" in
   100) notify "low" "Batería al: $bateria_con_porsentaje" "Desconecte el cargador"
       ;;
-  80) notify "low" "Batería al: $bateria_con_porsentaje"
+  85) notify "low" "Batería al: $bateria_con_porsentaje" "Desconecte el cargador"
       ;;
-  60) notify "normal" "Batería al: $bateria_con_porsentaje"
-      ;;
-  40) notify "normal" "Batería al: $bateria_con_porsentaje"
-      ;;
-  20) notify "critical" "Batería al: $bateria_con_porsentaje"
+  25) notify "critical" "Batería al: $bateria_con_porsentaje"
       ;;
   10) notify "critical" "Batería al: $bateria_con_porsentaje" "Conecte el cargador. Si llega a 5% se apaga la PC"
       ;;
