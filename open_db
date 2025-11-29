@@ -4,12 +4,12 @@ import sqlite3
 import os
 
 envhome = os.getenv('HOME')
-dbfile = "/home/lauta/.clipboard.sqlite"
+dbfile = "/home/lautaro/.clipboard.sqlite"
 
 con = sqlite3.connect(dbfile)
 cur = con.cursor()
 
-items = [row[0] for row in cur.execute("SELECT contents FROM c")]
+items = [row[0] for row in cur.execute("SELECT contents FROM c ORDER BY id DESC")]
 nul_separated = '\x00'.join(items)
 
 con.close()

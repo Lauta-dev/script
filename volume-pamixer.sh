@@ -13,7 +13,9 @@ case $1 in
   ;;
 esac
 
-get_volume_human=$(pamixer pamixer --get-volume-human)
+echo "vvv"
+
+get_volume_human=$(pamixer --get-volume-human)
 trigger_notify() {
   dunstify -u low \
     -r 1 \

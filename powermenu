@@ -1,0 +1,36 @@
+#!/bin/bash
+
+opt1="⏻ Apagar"
+opt2="󰜉 Reiniciar"
+opt3="󰿅 Salir de la sesión"
+
+list_col=2
+list_row=6
+general_style="$HOME/.config/hypr/launcher/style.rasi"
+
+rofi_cmd() {
+  rofi $1 \
+    -theme "${general_style}"
+}
+
+launch_notify () {
+  dunstify "$1" "$2" -I "$3"
+}
+
+run_rofi() {
+  echo -e "$opt1\n$opt2\n$opt3" | rofi_cmd "-dmenu"
+}
+
+choise=$(run_rofi)
+if [[ "$choise" == "$opt1" ]]; then
+  /bin/shutdown now
+
+elif [[ "$choise" == "$opt2" ]]; then
+  /bin/reboot now
+
+elif [[ "$choise" == "$opt3" ]]; then
+  if [[ "$XDG_CURRENT_DESKTOP" == "Hyprland" ]]; then
+    /bin/killall Hyprland
+  fi
+fi
+

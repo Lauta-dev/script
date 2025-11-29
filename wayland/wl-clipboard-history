@@ -5,6 +5,7 @@
 set -euo pipefail
 
 clipboard_file="$HOME/.clipboard.sqlite"
+wl_clipboard="$HOME/dev/script/wayland/wl-clipboard-history"
 
 query () {
     echo "$1" | sqlite3 -separator "," "$clipboard_file"
@@ -21,7 +22,7 @@ fi
 
 
 listen () {
-    wl-paste -w ./wl-clipboard-history
+    wl-paste -w $wl_clipboard
 }
 
 helpusage () {

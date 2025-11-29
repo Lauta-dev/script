@@ -54,12 +54,12 @@ fi
 
 function run_fzf_with_preview () {
   if [[ preview == "cat" ]]; then
-    sqlite3 "$db_dir" "select id from c" | \
-      fzf --multi --preview "sqlite3 $db_dir 'select contents from c where id = {1}' | $preview" | \
+    sqlite3 "$db_dir" "select id from c order by id desc;" | \
+      fzf  --input-label ' Search '  --layout=reverse --preview-window="right:80%" --style full --multi --preview "sqlite3 $db_dir 'select contents from c where id = {1}' | $preview" | \
       xargs -I {} sh -c "sqlite3 $db_dir 'select contents from c where id = {}' | $copy_tool"
   else
-    sqlite3 "$db_dir" "select id from c" | \
-      fzf --multi --preview "sqlite3 $db_dir 'select contents from c where id = {1}' | bat -n --color=always" | \
+    sqlite3 "$db_dir" "select id from c order by id desc" | \
+      fzf --input-label ' Search '  --layout=reverse --preview-window="right:80%" --style full --multi --preview "sqlite3 $db_dir 'select contents from c where id = {1}' | bat -n --color=always" | \
       xargs -I {} sh -c "sqlite3 $db_dir 'select contents from c where id = {}' | $copy_tool"
   fi
 }
@@ -67,7 +67,7 @@ function run_fzf_with_preview () {
 case "$1" in
   "-with_preview") run_fzf_with_preview
     ;;
-  "-without_preview") ./open_db | fzf --read0 --reverse | $copy_tool
+  "-without_preview") ./open_db | fzf --read0 --reverse --input-label ' Search '  --layout=reverse --preview-window="right:80%" --style full | $copy_tool
     ;;
   *) dunstify "No exist"
     ;;

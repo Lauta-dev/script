@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Este script hace uso de ACPID, se usa para apagar la pantalla al bajar la tapa del portatil
+# SOLO FUNCIONA EN X11
 
 # Pasos a seguir
 # 
@@ -8,13 +9,12 @@
 # 2. Copiar esto a /etc/acpi/events/power
 
 # event=button/lid
-# action=/home/lauta/script/power.sh %e
+# action=/home/<tu-usuario>/script/power.sh %e
 
 ##################################################
-
-X_USER=lauta
+echo "$(date) evento: $3" >> /tmp/lid-debug.log
 export DISPLAY=:0
-export XAUTHORITY=/home/$X_USER/.Xauthority
+export XAUTHORITY=/home/$USER/.Xauthority
 export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
 
 case "$3" in
