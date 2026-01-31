@@ -4,8 +4,8 @@
 # Rofi themes (No es mío): https://github.com/adi1090x/rofi
 
 list_col=1
-list_row=8
-general_style="$HOME/.config/hypr/launcher/style.rasi"
+list_row=7
+general_style="$HOME/.config/rofi/launchers/type-4/style-1.rasi"
 
 rofi_cmd() {
   rofi $1 \
@@ -31,4 +31,9 @@ case "$1" in
   ;;
   'clip') rofi_clip
   ;;
+  'wall') /bin/bash ~/dev/script/wall
+  ;;
+  'cpupower') /bin/bash ~/dev/script/rofi-cpupower.sh
+  ;;
+  'powermenu') /bin/bash ~/dev/script/powermenu
 esac

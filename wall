@@ -1,0 +1,33 @@
+#!/bin/bash
+WALL_DIR="$HOME/Imágenes/wallpaper"
+CACHE_DIR="$HOME/.cache/rofi-walls"
+ROFI_THEME="$HOME/.config/rofi/launchers/type-3/wall.rasi"
+
+mkdir -p "$CACHE_DIR"
+
+export MODE=$(cat ~/.cache/current_mode 2>/dev/null || echo "dark")
+
+# 1. Generar miniaturas en segundo plano para las imágenes que no tengan
+# Usamos 'magick' (o 'convert') para crear iconos de 200px
+for img in "$WALL_DIR"/*.{png,jpg,jpeg,webp}; do
+    [ -e "$img" ] || continue
+    name=$(basename "$img")
+    if [ ! -f "$CACHE_DIR/$name" ]; then
+        # Creamos una miniatura rápida para el caché
+        convert "$img" -thumbnail 200x200^ -gravity center -extent 200x200 "$CACHE_DIR/$name" &
+    fi
+done
+wait # Esperamos que termine de procesar las nuevas si las hay
+
+# 2. El bucle de Rofi ahora usa el caché para el icono (\x1f), 
+# pero mantiene la ruta original para el valor del texto (\0)
+SELECTED_WALL=$(for a in "$WALL_DIR"/*.{png,jpg,jpeg,webp}; do
+    [ -e "$a" ] || continue
+    name=$(basename "$a")
+    echo -en "$a\0icon\x1f$CACHE_DIR/$name\n"
+done | rofi -dmenu -theme "$ROFI_THEME")
+
+# 3. Ejecutar el script de colores
+if [[ -n "$SELECTED_WALL" ]]; then
+    ~/dev/script/gen_colors_based_on_wallpaper.sh "$SELECTED_WALL"
+fi

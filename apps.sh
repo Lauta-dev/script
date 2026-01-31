@@ -1,9 +1,9 @@
 #!/bin/bash
 personal_terminal="alacritty"
 terminal="alacritty"
-browser_web='zen'
-file_manager="thunar $HOME"
-music="$terminal --title cmus --command cmus"
+browser_web='zen-browser'
+file_manager="pcmanfm-qt $HOME"
+music="$terminal --title music --command rmpc"
 htop="$terminal -t htop -e htop"
 notes='obsidian'
 terminal_file_manager="$terminal -t ranger -e ranger"

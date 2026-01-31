@@ -4,17 +4,17 @@ opt1="⏻ Apagar"
 opt2="󰜉 Reiniciar"
 opt3="󰿅 Salir de la sesión"
 
-list_col=2
-list_row=6
-general_style="$HOME/.config/hypr/launcher/style.rasi"
+list_col=1
+list_row=3
+general_style="$HOME/.config/rofi/launchers/type-4/style-1.rasi"
 
+msg="$(hostname)"
 rofi_cmd() {
   rofi $1 \
-    -theme "${general_style}"
-}
-
-launch_notify () {
-  dunstify "$1" "$2" -I "$3"
+    -mesg $msg \
+    -theme "${general_style}" \
+    -theme-str "listview {columns: $list_col; lines: $list_row;}" \
+    -theme-str "inputbar {enabled: false;}"
 }
 
 run_rofi() {
@@ -31,6 +31,8 @@ elif [[ "$choise" == "$opt2" ]]; then
 elif [[ "$choise" == "$opt3" ]]; then
   if [[ "$XDG_CURRENT_DESKTOP" == "Hyprland" ]]; then
     /bin/killall Hyprland
+  elif [[ "$XDG_CURRENT_DESKTOP" == "openbox" ]]; then
+    /bin/openbox --exit
   fi
 fi
 

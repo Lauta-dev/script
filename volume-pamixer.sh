@@ -13,29 +13,28 @@ case $1 in
   ;;
 esac
 
-echo "vvv"
-
 get_volume_human=$(pamixer --get-volume-human)
 trigger_notify() {
-  dunstify -u low \
+  dunstify \
     -r 1 \
     -i $1 \
-    "Volume: $get_volume_human"
+    "" \
+    "<span font='12' weight='bold'>Volumen: $get_volume_human</span>\n&#160;" 
 }
 
 if [[ "$get_volume_human" == "muted" ]]; then
-  trigger_notify ~/.icons/Papirus-Dark/48x48/status/notification-audio-volume-muted.svg
+  trigger_notify ~/.local/share/icons/Papirus-Dark/48x48/status/notification-audio-volume-muted.svg
 
 elif [[ "$get_volume_human" > "0%" && "$get_volume_human" < "25%" ]]; then
-  trigger_notify ~/.icons/Papirus-Dark/48x48/status/notification-audio-volume-low.svg
+  trigger_notify ~/.local/share/icons/Papirus-Dark/48x48/status/notification-audio-volume-low.svg
 
 elif [[ "$get_volume_human" > "25%" && "$get_volume_human" < "50%" ]]; then
-  trigger_notify ~/.icons/Papirus-Dark/48x48/status/notification-audio-volume-medium.svg
+  trigger_notify ~/.local/share/icons/Papirus-Dark/48x48/status/notification-audio-volume-medium.svg
 
 elif [[ "$get_volume_human" > "50%" && "$get_volume_human" < "75%" ]]; then
-  trigger_notify ~/.icons/Papirus-Dark/48x48/status/notification-audio-volume-medium.svg
+  trigger_notify ~/.local/share/icons/Papirus-Dark/48x48/status/notification-audio-volume-medium.svg
 
 elif [[ "$get_volume_human" > "75%" && "$get_volume_human" < "99%" ]]; then
-  trigger_notify ~/.icons/Papirus-Dark/48x48/status/notification-audio-volume-high.svg
+  trigger_notify ~/.local/share/icons/Papirus-Dark/48x48/status/notification-audio-volume-high.svg
 fi
 
