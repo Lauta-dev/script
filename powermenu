@@ -1,8 +1,8 @@
 #!/bin/bash
 
-opt1="⏻ Apagar"
-opt2="󰜉 Reiniciar"
-opt3="󰿅 Salir de la sesión"
+shutdown="⏻ Shutdown"
+reboot="󰜉 Reboot"
+logout=" Logout"
 
 list_col=1
 list_row=3
@@ -13,22 +13,23 @@ rofi_cmd() {
   rofi $1 \
     -mesg $msg \
     -theme "${general_style}" \
+    -theme-str 'mainbox{children: [ "message", "listview" ];}' \
     -theme-str "listview {columns: $list_col; lines: $list_row;}" \
-    -theme-str "inputbar {enabled: false;}"
+    -theme-str "window {width: 400;}"
 }
 
 run_rofi() {
-  echo -e "$opt1\n$opt2\n$opt3" | rofi_cmd "-dmenu"
+  echo -e "$shutdown\n$reboot\n$logout" | rofi_cmd "-dmenu"
 }
 
 choise=$(run_rofi)
-if [[ "$choise" == "$opt1" ]]; then
+if [[ "$choise" == "$shutdown" ]]; then
   /bin/shutdown now
 
-elif [[ "$choise" == "$opt2" ]]; then
+elif [[ "$choise" == "$reboot" ]]; then
   /bin/reboot now
 
-elif [[ "$choise" == "$opt3" ]]; then
+elif [[ "$choise" == "$logout" ]]; then
   if [[ "$XDG_CURRENT_DESKTOP" == "Hyprland" ]]; then
     /bin/killall Hyprland
   elif [[ "$XDG_CURRENT_DESKTOP" == "openbox" ]]; then

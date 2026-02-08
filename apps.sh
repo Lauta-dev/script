@@ -2,7 +2,7 @@
 personal_terminal="alacritty"
 terminal="alacritty"
 browser_web='zen-browser'
-file_manager="pcmanfm-qt $HOME"
+file_manager="thunar $HOME"
 music="$terminal --title music --command rmpc"
 htop="$terminal -t htop -e htop"
 notes='obsidian'

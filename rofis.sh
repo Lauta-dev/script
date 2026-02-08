@@ -10,9 +10,9 @@ general_style="$HOME/.config/rofi/launchers/type-4/style-1.rasi"
 rofi_cmd() {
   rofi $1 \
     -theme-str "configuration { modi:'drun'; show-icons:true; }" \
-    -theme-str "listview {columns: $list_col; lines: $list_row;}" \
+    -theme-str "listview {columns: 2; lines: 8;}" \
     -theme-str "mainbox {children: ['inputbar', 'listview'];}" \
-    -theme-str "window {width: 600;}" \
+    -theme-str "window {width: 800;}" \
     -theme "${general_style}"
 }
 
@@ -36,4 +36,6 @@ case "$1" in
   'cpupower') /bin/bash ~/dev/script/rofi-cpupower.sh
   ;;
   'powermenu') /bin/bash ~/dev/script/powermenu
+  ;;
+  'mpd') /bin/bash ~/dev/script/v.sh
 esac

@@ -61,7 +61,7 @@ mapfile -d '' files < <(
     find . -maxdepth 1 -mindepth 1 -type f -name ".*" -print0
   } |
  fzf -m --style minimal --preview-window=right:80% --read0 --print0 --multi \
-  --preview "if [ -d "{}" ]; then tree -C "{}" | head -200; else /bin/bat "{}"; fi"
+  --preview "/bin/bash if [ -d "{}" ]; then tree -C "{}" | head -200; else /bin/bat "{}"; fi"
 )
 
 [ -z "$files" ] && exit 0
