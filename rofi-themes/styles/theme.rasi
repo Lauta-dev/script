@@ -1,0 +1,55 @@
+@import "./ayu-dark.rasi"
+
+* {
+  font: "BlexMono Nerd Font Mono 10";
+  
+  border-line-grosor: 2px;
+  border-line-color: @selected;
+  border-line-top: 2px 0 0 0;
+  border-line-bottom: 0 0 2px 0;
+
+  window-border-color: @border-color;
+  window-border-radius: 0.4em;
+}
+
+window {
+  border:        2px solid;
+  border-color:  var(window-border-color);
+  border-radius: var(border-line-grosor);
+}
+
+listbox {
+  padding: 1em;
+}
+
+inputbar {
+  background-color: transparent;
+  text-color: @foreground;
+  border-color: var(border-line-color);
+  border: var(border-line-top);
+}
+
+entry {
+  spacing: 1em;
+  padding: 1em;
+  background-color: @background-alt;
+  text-color: @foreground;
+}
+
+message {
+  background-color: transparent;
+}
+
+textbox {
+  padding:                     1em;
+  background-color:            @background-alt;
+  text-color:                  @foreground;
+  border-color: var(border-line-color);
+  border: var(border-line-bottom);
+
+}
+error-message {
+  padding:                     1em;
+  background-color:            @background;
+  text-color:                  @foreground;
+}

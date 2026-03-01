@@ -1,0 +1,28 @@
+* {
+    /* --- Base de la Variante Deep --- */
+    background:      #0a0c0f; /* Fondo principal */
+    background-alt:  #0e1116; /* Fondo elevado (raised) */
+    foreground:      #f2f5fa; /* Texto principal de alto contraste */
+    border-color:    #1c2530; /* Borde sutil */
+
+    /* --- Galería de Acentos (Elige uno para 'selected') --- */
+    
+    /* El Clásico: Ayu Gold/Orange */
+    // selected:        #ffb454; /* El alma de Ayu, cálido y elegante */
+    
+    /* Alternativa: Ayu Cyan */
+    // selected:     #59c2ff; /* Fresco, moderno y muy legible */
+    
+    /* Alternativa: Ayu Purple */
+     selected:     #d2a6ff; /* Un toque místico y suave */
+    
+    /* Alternativa: Ayu Green */
+    // selected:     #b8cc52; /* Perfecto si buscas un look más 'hacker' */
+    
+    /* --- Estados Especiales --- */
+    active:          #b8cc52; /* Verde: Para procesos activos o éxito */
+    urgent:          #f07178; /* Coral/Rojo: Para alertas o notificaciones */
+    
+    /* Color de texto sobre el acento */
+    accent-text:     #0a0c0f; /* Texto oscuro para máxima legibilidad sobre el acento */
+}

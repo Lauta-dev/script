@@ -1,6 +1,6 @@
 #!/bin/bash
 
-general_style="$HOME/.config/rofi/launchers/type-4/style-1.rasi"
+general_style="~/dev/script/rofi-themes/cpupower.rasi"
 
 # 1. Obtener la lista de gobernadores disponibles
 # xargs elimina espacios en blanco sobrantes
@@ -17,8 +17,8 @@ MENU_OPTIONS=""
 SELECTED_INDEX=0
 SELECTED_GOV=""
 COUNT=0
-LIST_COL=1
-LIST_ROW=6
+LIST_COL=2
+LIST_ROW=3
 
 for GOV in $GOVERNORS_LIST; do
     # Si el gobernador es el actual, lo marcamos visualmente (opcional)
@@ -36,7 +36,7 @@ done
 CHOICE=$(echo -e "${MENU_OPTIONS%\\n}" | rofi -dmenu -i \
   -theme-str "listview {columns: $LIST_COL; lines: $LIST_ROW;}" \
   -theme-str 'mainbox{children: [ "message", "listview" ];}' \
-  -theme-str "window {width: 265;}" \
+  -theme-str "window {width: 565;}" \
   -theme "$general_style" \
   -mesg "CPUPOWER | ${AVG_FREQ}MHz | $SELECTED_GOV" \
   -p "Modo:" \
@@ -47,10 +47,13 @@ CHOICE_CLEAN=$(echo "$CHOICE" | awk '{print $1}')
 
 # 6. Aplicar cambio
 if [ -n "$CHOICE_CLEAN" ]; then
-    # Solo ejecutar si es un cambio real
     if [ "$CHOICE_CLEAN" != "$CURRENT_GOV" ]; then
-        sudo cpupower frequency-set -g "$CHOICE_CLEAN" && \
-        notify-send "CPU Power" "Cambiado a: $CHOICE_CLEAN" --icon=processor
+        # Cambiamos 'sudo' por 'pkexec'
+        if pkexec cpupower frequency-set -g "$CHOICE_CLEAN"; then
+            notify-send "CPU Power" "Cambiado a: $CHOICE_CLEAN" --icon=processor
+        else
+            notify-send "CPU Power" "Acción cancelada o error de autenticación" --icon=dialog-error
+        fi
     else
         notify-send "CPU Power" "Ya estás en modo $CHOICE_CLEAN" --icon=processor
     fi

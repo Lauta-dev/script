@@ -3,33 +3,34 @@
 # Script para lanzar rofi sin tener que tocar la configuración del Window Manager
 # Rofi themes (No es mío): https://github.com/adi1090x/rofi
 
-list_col=1
-list_row=7
-general_style="$HOME/.config/rofi/launchers/type-4/style-1.rasi"
+# menu, menu-v2,v3,v4
+APP_LAUNCHER_MENU="menu"
 
-rofi_cmd() {
-  rofi $1 \
-    -theme-str "configuration { modi:'drun'; show-icons:true; }" \
-    -theme-str "listview {columns: 2; lines: 8;}" \
-    -theme-str "mainbox {children: ['inputbar', 'listview'];}" \
-    -theme-str "window {width: 800;}" \
-    -theme "${general_style}"
-}
+APP_LAUNCHER_THEME="$HOME/dev/script/rofi-themes/$APP_LAUNCHER_MENU.rasi"
+WINDOW_THEME="$HOME/dev/script/rofi-themes/windows.rasi"
 
-rofi_clip() {
-  rofi -modi "clipboard:greenclip print" -show clipboard -run-command '{cmd}' \
-    -theme-str "configuration { show-icons:false; }" \
-    -theme-str "listview {columns: $list_col; lines: $list_row;}" \
-    -theme-str "mainbox {children: ['inputbar', 'listview'];}" \
-    -theme-str "window {width: 800;}" \
-    -theme-str "element {border-radius: 10px;}" \
-    -theme "${general_style}"
+app_launcher() {
+  CURRENT_WALL=$(cat /tmp/current_wallpaper)
+
+  bg_image=""
+
+  if [[ $APP_LAUNCHER_MENU == "menu" ]]; then
+    bg_image="imagebox { background-image: url('$CURRENT_WALL', height); }"
+    bg_image+="window { width: 60em; }"
+  
+  elif [[ $APP_LAUNCHER_MENU == "menu-v3" ]]; then
+    bg_image="inputbar { background-image: url('$CURRENT_WALL', width); }"
+  fi
+
+  rofi -show drun \
+    -theme "$APP_LAUNCHER_THEME" \
+    -theme-str "$bg_image"
 }
 
 case "$1" in
-  'apps') rofi_cmd "-show drun"
+  'apps') app_launcher 
   ;;
-  'clip') rofi_clip
+  'clip') clipcat-menu
   ;;
   'wall') /bin/bash ~/dev/script/wall
   ;;
@@ -37,5 +38,7 @@ case "$1" in
   ;;
   'powermenu') /bin/bash ~/dev/script/powermenu
   ;;
-  'mpd') /bin/bash ~/dev/script/v.sh
+  'mpd') /bin/bash ~/dev/script/rofi-mpd.sh
+  ;;
+  'window') rofi -show window -theme "$WINDOW_THEME"
 esac
